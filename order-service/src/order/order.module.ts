@@ -4,9 +4,10 @@ import { OrderController } from './order.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { createOrderScheme, orders_schema } from 'src/schemas/orders.schemas';
 import { BoxSchema, createBoxSchema, meal_plan, mealPlanSchema, subscription_management, SubscriptionManagementSchema } from 'src/schemas/gettingOrders.schema';
+import { cancelOrders, cancelOrdersScheme } from 'src/schemas/cancelOrders.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{name: orders_schema.name, schema: createOrderScheme}, {name: subscription_management.name, schema: SubscriptionManagementSchema}, {name: meal_plan.name, schema: mealPlanSchema}, {name: BoxSchema.name, schema: createBoxSchema}])],
+  imports: [MongooseModule.forFeature([{name: orders_schema.name, schema: createOrderScheme}, {name: subscription_management.name, schema: SubscriptionManagementSchema}, {name: meal_plan.name, schema: mealPlanSchema}, {name: BoxSchema.name, schema: createBoxSchema}, {name: cancelOrders.name, schema: cancelOrdersScheme}])],
   providers: [OrderService],
   controllers: [OrderController]
 })

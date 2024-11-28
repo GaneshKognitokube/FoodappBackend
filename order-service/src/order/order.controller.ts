@@ -1,16 +1,23 @@
-import { Body, Controller, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { createOrderDto } from 'src/dto/createorder.dto';
 import { Request, Response } from 'express'
+import { cancelOrderDto } from 'src/dto/cancelorder.dto';
 
 @Controller('order')
 export class OrderController {
     constructor(private orderService: OrderService){}
 
-    @Post('createorder')
+    @Get('createorder')
     async getOrder(@Req() requst: Request, @Res() response: Response)
     {
-        response.send(await this.orderService.createTodaysOrders())
+        response.json(await this.orderService.createTodaysOrders())
+    }
+
+    @Post('cancelorder')
+    async cancelorer(@Req() req: Request, @Res() res: Response, @Body() canceloder: cancelOrderDto)
+    {
+        res.json(await this.orderService.cancilOrder(canceloder.userId, canceloder.date, canceloder.cmeal))
     }
 
     @Post('hello')

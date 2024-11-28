@@ -4,7 +4,7 @@ import { map } from "rxjs";
 @Schema()
 export class BoxSchema
 {
-    @Prop({required: true})
+    @Prop({required: true, unique: true})
     meal_id: string;
 
     @Prop({required: true, type: map, of: Object})

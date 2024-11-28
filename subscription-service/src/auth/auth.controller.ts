@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Put, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { createNewSubscriptionDto } from './dto/createNewSubscription.dto';
 import { createMealPlanDto } from './dto/createMealPlan.dto';
 import { Request, Response } from 'express';
 import { createBoxPlanDto } from './dto/crateBoxPlan.dto';
+import { createlanDto } from './dto/createplane.dto';
+import { UserplaneDto } from './dto/userplane.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -43,5 +45,40 @@ export class AuthController {
             message: "Subscription Failed",
             error: result.error
         });
+    }
+
+    @Patch('updateSubscriptionStatus')
+    async updateSubstatus(@Res() res: Response)
+    {
+        const result = await this.AuthService.updateCompletedSubscriptionStatus();
+        res.json(result);
+    }
+
+    @Post('createplane')
+    async createplane(@Res() res: Response, @Body() data: createlanDto)
+    {
+        const result = await this.AuthService.createplanes(data);
+        res.json(result);
+    }
+
+    @Get('getplane')
+    async Getplane(@Res() res: Response)
+    {
+        const result = await this.AuthService.getplanes();
+        res.json(result);
+    }
+
+    @Post('createuserplane')
+    async createuserplane(@Res() res: Response, @Body() data: UserplaneDto)
+    {
+        const result = await this.AuthService.createuserplanes(data);
+        res.json(result);
+    }
+
+    @Post('getuserplanes')
+    async getuserplanes(@Res() res: Response, @Body() userid: any)
+    {
+        const result = await this.AuthService.getuserplanes(userid);
+        res.json(result);
     }
 }
